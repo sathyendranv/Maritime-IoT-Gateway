@@ -50,7 +50,7 @@
         "publishTo": "mqtt"
     },
     "mqtt": {
-        "host": "localhost",
+        "host": "broker.hivemq.com",
         "port": 1883,
         "enable_lwt": true,
         "username": "",
