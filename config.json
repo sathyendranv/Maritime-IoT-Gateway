@@ -1,0 +1,60 @@
+{
+    "log_level":"INFO",
+    "data_aquisition": [
+            {
+                "protocol":"nmea",
+                "host":"localhost",
+                "port": 8888,
+                "publishtopic": "ows-challenge/mv-sinking-boat/main-crane/rot",
+                "unit": "celsius"
+            },
+            {
+            "protocol": "modbus",
+            "host":"localhost",
+            "port": 8889,
+            "interval": 2, 
+            "timeout": 10,
+            "register": {
+                "holding_register": [
+                    {
+                        "address": 0,
+                        "name": "Luffing motor 1 temperature (PS Winch)",
+                        "publishtopic": "ows-challenge/mv-sinking-boat/main-crane/luffing/temp-mot-1",
+                        "unit": "celsius"
+                    },
+                    {
+                        "address": 1,
+                        "name": "Luffing motor 2 temperature (STB Winch)",
+                        "publishtopic": "ows-challenge/mv-sinking-boat/main-crane/luffing/temp-mot-2" ,
+                        "unit": "celsius"                   
+                    },
+                    {
+                        "address": 2,
+                        "name": "Luffing motor 3 temperature (PS Winch)" ,
+                        "publishtopic": "ows-challenge/mv-sinking-boat/main-crane/luffing/temp-mot-3"  ,
+                        "unit": "celsius"                 
+                    },
+                    {
+                        "address": 3,
+                        "name": "Luffing motor 4 temperature (STB Winch)",
+                        "publishtopic": "ows-challenge/mv-sinking-boat/main-crane/luffing/temp-mot-4"   ,
+                        "unit": "celsius"                 
+                    }
+                ]
+            }
+        }
+    ],
+    "transform": {
+        "syncInterval": 5,
+        "offset": 1,
+        "publishTo": "mqtt"
+    },
+    "mqtt": {
+        "host": "localhost",
+        "port": 1883,
+        "enable_lwt": true,
+        "username": "",
+        "password": ""
+        
+    }
+}
