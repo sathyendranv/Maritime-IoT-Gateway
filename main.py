@@ -5,6 +5,7 @@ import threading
 from data_acquisition.modbusTcpInterface import start_modbus_client
 from data_transformation.transform_data import start_data_transformer
 from cloud_connector.publishToMqtt import start_mqtt_client
+from data_acquisition.nmeaSocketInterface import start_nmea_client
 
 CONFIG_FILE = 'config.json'
 def main():
@@ -33,9 +34,9 @@ def main():
                     threads.append(t)
                 if 'protocol' in item and item['protocol'] == 'nmea':
                     logger.info(f"Starting NMEA client for {item['host']}:{item['port']}")
-                    # t = threading.Thread(target=start_nmea_client, args=(item, q, logger))
-                    # t.start()
-                    # threads.append(t)
+                    t = threading.Thread(target=start_nmea_client, args=(item, q, logger))
+                    t.start()
+                    threads.append(t)
                 if 'protocol' in item and item['protocol'] != 'modbus' and item['protocol'] != 'nmea':
                     logger.fatal(f"Unsupported protocol {item['protocol']} for {item['host']}:{item['port']}")
         if 'transform' in app_cfg:
