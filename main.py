@@ -4,6 +4,7 @@ import queue
 import threading
 from data_acquisition.modbusTcpInterface import start_modbus_client
 from data_transformation.transform_data import start_data_transformer
+from cloud_connector.publishToMqtt import start_mqtt_client
 
 CONFIG_FILE = 'config.json'
 def main():
@@ -39,14 +40,14 @@ def main():
                     logger.fatal(f"Unsupported protocol {item['protocol']} for {item['host']}:{item['port']}")
         if 'transform' in app_cfg:
             logger.info("Starting data transformer")
-            t = threading.Thread(target=start_data_transformer, args=(logger, q, write_q))
+            t = threading.Thread(target=start_data_transformer, args=(app_cfg['transform'], logger, q, write_q))
             t.start()
             threads.append(t)
         if 'mqtt' in app_cfg:
             logger.info("Starting MQTT client")
-            # t = threading.Thread(target=start_mqtt_client, args=(app_cfg['mqtt'], write_q, logger))
-            # t.start()
-            # threads.append(t)
+            t = threading.Thread(target=start_mqtt_client, args=(app_cfg['mqtt'], logger, write_q))
+            t.start()
+            threads.append(t)
                     
         else:
             logger.fatal("No data acquisition configuration found in config.json.")

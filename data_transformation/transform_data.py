@@ -51,6 +51,6 @@ class DataTransformer:
                 continue
                 
 
-def start_data_transformer(logger, read_q, write_q):
+def start_data_transformer(config, logger, read_q, write_q):
     transformer = DataTransformer(logger, read_q, write_q)
     transformer.worker()

@@ -54,7 +54,9 @@
         "port": 1883,
         "enable_lwt": true,
         "username": "",
-        "password": ""
+        "password": "",
+        "client_id": "ows-challenge-22052025",
+        "keepalive": 600
         
     }
 }
